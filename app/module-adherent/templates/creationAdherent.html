@@ -1,0 +1,154 @@
+
+
+<section>
+
+	<form novalidate class="form-horizontal" name="adherent" ng-submit="newAdherentCtrl.submit()">
+		<div ng-show="newAdherentCtrl.error.badNom">
+			<label class="error col-sm-10 col-sm-offset-2">Le nom n'est pas valide !</label>
+		</div>
+		
+		<div ng-show="newAdherentCtrl.error.badPrenom">
+			<label class="error col-sm-10 col-sm-offset-2">Le prénom n'est pas valide !</label>
+		</div>
+		
+		<div ng-show="newAdherentCtrl.error.badBrithday">
+			<label class="error col-sm-10 col-sm-offset-2">La date de naissance n'est pas valide !</label>
+		</div>
+		
+		<div ng-show="newAdherentCtrl.error.badEmail">
+			<label class="error col-sm-10 col-sm-offset-2">L'email n'est pas valide !</label>
+		</div>
+		
+		<div ng-show="newAdherentCtrl.error.badAddresse">
+			<label class="error col-sm-10 col-sm-offset-2">L'addresse n'est pas valide !</label>
+		</div>
+		
+		<div ng-show="newAdherentCtrl.error.badCP">
+			<label class="error col-sm-10 col-sm-offset-2">Le code postal n'est pas valide !</label>
+		</div>
+		
+		<div ng-show="newAdherentCtrl.error.badVille">
+			<label class="error col-sm-10 col-sm-offset-2">La ville n'est pas valide !</label>
+		</div>
+		
+		<div ng-show="newAdherentCtrl.error.badPayday">
+			<label class="error col-sm-10 col-sm-offset-2">La date de paiement de la cotisation n'est pas valide !</label>
+		</div>
+		
+		<div ng-show="newAdherentCtrl.error.badMontant">
+			<label class="error col-sm-10 col-sm-offset-2">Le montant de la cotisation n'est pas valide !</label>
+		</div>
+		
+		
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label hidden-xs">Nom :</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="nom" placeholder="Nom" ng-model="newAdherentCtrl.adherent.nom" required />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label hidden-xs">Prenom :</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="prenom" placeholder="Prenom" ng-model="newAdherentCtrl.adherent.prenom" required />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<!--  date de naissance avec text -->
+				<label class="col-sm-2 control-label hidden-xs">Date de naissance :</label>
+				<div class="col-sm-3 divInput">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1"><span class="fa fa-birthday-cake"></span></span>
+						<input type="date" class="form-control" name="birthday" placeholder="aaaa-mm-jj" aria-describedby="basic-addon1" 
+							ng-model="newAdherentCtrl.adherent.date_naissance" required>
+					</div>
+				</div>
+
+			<label class="col-sm-1 control-label hidden-xs">Age :</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" name="age" placeholder="Age" value="{{newAdherentCtrl.getAge()}}" readonly />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="titre" class="col-sm-2 control-label hidden-xs">E-mail :</label>
+			<div class="col-sm-8">
+				<input type="email" class="form-control" name="email" placeholder="E-mail" ng-model="newAdherentCtrl.adherent.email" required />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label hidden-xs">Adresse :</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="adresse" placeholder="Adresse" ng-model="newAdherentCtrl.adherent.adresse.ligne1" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label hidden-xs"></label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="adresse2" placeholder="Complement d'adresse" 
+						ng-model="newAdherentCtrl.adherent.adresse.ligne2" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label hidden-xs">CP :</label>
+			<div class="col-sm-2 divInput">
+				<input type="number" class="form-control" name="cp" placeholder="CP" 
+						ng-model="newAdherentCtrl.adherent.adresse.codepostal"  min="0" />
+			</div>
+			
+			<label class="col-sm-1 control-label hidden-xs">Ville :</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" name="ville" placeholder="Ville" ng-model="newAdherentCtrl.adherent.adresse.ville" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<!--  date de payement de cotisation text -->
+			<label class="col-sm-2 control-label hidden-xs">Date de paiement de la cotisation :</label>
+			<div class="col-sm-3">
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1"><span class="fa fa-calendar"></span></span>
+					<input type="date" class="form-control" name="payday" placeholder="aaaa-mm-jj" 
+							ng-model="newAdherentCtrl.adherent.cotisation.debut" />
+				</div>
+			</div>
+				
+			<label class="col-sm-1 control-label hidden-xs">Montant :</label>
+			<div class="col-sm-3">
+				<div class="input-group">
+					<input type="number" class="form-control" name="montant" placeholder="Montant" 
+							ng-model="newAdherentCtrl.adherent.cotisation.montant" min="0" />
+					<span class="input-group-addon">&euro;</span>
+				</div>
+			</div>
+		</div>
+		
+		<!--  date de fin text -->
+		<div class="form-group">
+			<label class="col-sm-2 control-label hidden-xs">Date de fin :</label>
+			<div class="col-sm-3">
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1"><span class="fa fa-calendar"></span></span>
+					<input type="text" class="form-control" name="datefin" placeholder="Date de fin" 
+							value="{{newAdherentCtrl.getDateFin() | date:'dd/MM/yyyy'}}" readonly />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-default btn-success">Enregistrer</button>
+			</div>
+		</div>
+	</form>
+
+</section>
+
+
+
+
