@@ -17,11 +17,13 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class Media {
-
+public class Media implements IoEntity {
+	private static final long serialVersionUID = 2819081289697510606L;
+	
+	
 	@Id
 	@GeneratedValue
-	private long id;
+	private Long id;
 	@Column
 	@NotEmpty
 	private String titre;
@@ -50,9 +52,18 @@ public class Media {
 		this.type = type;
 	}
 
-	public long getId() {
-		return this.id;
+
+
+	@Override
+	public Long getId() {
+		return id;
 	}
+
+	@Override
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 
 	// SETTER et GETTER du titre
 	public void setTitre(String t) {
@@ -110,4 +121,6 @@ public class Media {
 	public Boolean getEmp(){
 		return emprunter;
 	}
+
+	
 }

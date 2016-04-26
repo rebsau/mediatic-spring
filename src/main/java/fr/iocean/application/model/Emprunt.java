@@ -13,10 +13,13 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-public class Emprunt {
+public class Emprunt implements IoEntity {
+	private static final long serialVersionUID = 9055544949827654081L;
+	
+	
 	@Id
 	@GeneratedValue
-	private long id;
+	private Long id;
 	@ManyToOne
 	private Media media;
 	@ManyToOne
@@ -66,6 +69,16 @@ public class Emprunt {
 	
 	public Adherent getAdherent(){
 		return adherent;
+	}
+
+	@Override
+	public Long getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

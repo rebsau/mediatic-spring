@@ -7,12 +7,14 @@ import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+
 @Entity
-public class Utilisateur {
+public class Utilisateur implements IoEntity {
+	private static final long serialVersionUID = 8628426842412727057L;
 
 		@Id
 		@GeneratedValue
-		private int id;
+		private Long id;
 		
 		@Column
 		@NotEmpty
@@ -36,12 +38,16 @@ public class Utilisateur {
 			this.motDePasse = motDePasse;
 			this.droits = droits;
 		}
+		
+		
 
-		public int getId() {
+		@Override
+		public Long getId() {
 			return id;
 		}
 
-		public void setId(int id) {
+		@Override
+		public void setId(Long id) {
 			this.id = id;
 		}
 
@@ -68,6 +74,8 @@ public class Utilisateur {
 		public void setDroits(boolean droits) {
 			this.droits = droits;
 		}
+
+		
 		
 	
 

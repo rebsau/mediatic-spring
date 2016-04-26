@@ -19,11 +19,13 @@ import fr.iocean.application.helper.DateHelper;
 
 @Entity
 @Table(name="adherent")
-public class Adherent {
+public class Adherent implements IoEntity {
+	private static final long serialVersionUID = 3488747282845051698L;
 	
+
 	@Id
 	@GeneratedValue
-	private int id;
+	private Long id;
 	
 	@Column
 	@NotEmpty
@@ -63,7 +65,8 @@ public class Adherent {
 	
 	
 	//GETTERS
-	public int getId() {
+	@Override
+	public Long getId() {
 		return id;
 	}
 	
@@ -111,6 +114,11 @@ public class Adherent {
 	}
 	
 	//SETTERS
+	@Override
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
@@ -184,6 +192,7 @@ public class Adherent {
 		
 		return res;
 	}
+
 	
 }
 
