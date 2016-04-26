@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 public class Emprunt implements IoEntity {
@@ -20,7 +22,9 @@ public class Emprunt implements IoEntity {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
 	@ManyToOne
+	@JsonIgnoreProperties("emprunteur")
 	private Media media;
 	@ManyToOne
 	private Adherent adherent;

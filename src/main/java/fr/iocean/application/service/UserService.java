@@ -19,7 +19,7 @@ public class UserService {
 	UserRepository userRepo;
 	
 	
-	
+	/*
     public User save(User user) {
         return userRepo.save(user);
     }
@@ -46,7 +46,7 @@ public class UserService {
     public User findOneByLogin(String login) {
 		return userRepo.findOneByLogin(login);
     }
-    
+    */
 }
 
 
