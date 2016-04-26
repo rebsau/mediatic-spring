@@ -1,4 +1,4 @@
-package fr.iocean.application.media.model;
+package fr.iocean.application.model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,8 +15,6 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
-import fr.iocean.application.emprunt.model.Emprunt;
 
 @Entity
 public class Media {

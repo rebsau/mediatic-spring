@@ -1,4 +1,4 @@
-package fr.iocean.application.emprunt.model;
+package fr.iocean.application.model;
 
 
 import java.util.Calendar;
@@ -10,9 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-
-import fr.iocean.application.adherent.model.Adherent;
-import fr.iocean.application.media.model.Media;
 
 
 @Entity

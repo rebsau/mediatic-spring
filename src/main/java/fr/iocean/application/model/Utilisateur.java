@@ -1,4 +1,4 @@
-package fr.iocean.application.user.model;
+package fr.iocean.application.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

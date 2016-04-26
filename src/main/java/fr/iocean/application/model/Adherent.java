@@ -1,4 +1,4 @@
-package fr.iocean.application.adherent.model;
+package fr.iocean.application.model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,8 +14,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-
-import fr.iocean.application.emprunt.model.Emprunt;
 import fr.iocean.application.helper.DateHelper;
 
 
