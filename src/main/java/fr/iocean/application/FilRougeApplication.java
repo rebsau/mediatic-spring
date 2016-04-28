@@ -1,3 +1,4 @@
+
 package fr.iocean.application;
 
 import org.springframework.boot.SpringApplication;
@@ -14,3 +15,4 @@ public class FilRougeApplication {
 		SpringApplication.run(FilRougeApplication.class, args);
 	}
 }
+
