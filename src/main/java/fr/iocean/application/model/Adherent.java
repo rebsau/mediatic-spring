@@ -1,5 +1,6 @@
 package fr.iocean.application.model;
 
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,19 +19,17 @@ import fr.iocean.application.helper.DateHelper;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Entity
+@Table(name = "adherent")
 @Getter
 @Setter
-@Table(name="adherent")
 public class Adherent implements IoEntity {
 	private static final long serialVersionUID = 3488747282845051698L;
-	
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@Column
 	@NotEmpty
 	private String nom;
@@ -57,12 +56,16 @@ public class Adherent implements IoEntity {
 	@OneToOne
 	@JsonIgnoreProperties("adherent")
 	private Emprunt emprunt;
+
 	
-	public Adherent () {
-		
+	@Column
+	private int nbrMedia;
+
+	public Adherent() {
+
 	}
-	
-	public Adherent (String prenom, String nom, Date date_naissance, String email) {
+	//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	public Adherent(String prenom, String nom, Date date_naissance, String email) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.date_naissance = date_naissance;
@@ -81,12 +84,5 @@ public class Adherent implements IoEntity {
 		else
 			return true;
 	}
-		
+
 }
-
-
-
-
-
-
-

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 
 import fr.iocean.application.model.IoEntity;
 
+
 public abstract class AbstractJpaRepository<T extends IoEntity> {
 
 	protected Class<T> entityClass;

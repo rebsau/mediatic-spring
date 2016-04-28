@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -- test init data
 
 
@@ -11,3 +12,4 @@ insert into emprunt (id, adherent_id, media_id, date_emprunt) values (12, 20, 1,
 insert into emprunt (id, adherent_id, media_id, date_emprunt) values (13, 40, 1, '2016-12-04');
 
 update media set emprunt_id = 11 where id = 1;
+
