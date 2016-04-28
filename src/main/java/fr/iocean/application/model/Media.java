@@ -1,6 +1,5 @@
 package fr.iocean.application.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,19 +25,20 @@ public class Media implements IoEntity {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Column
+	
 	@NotEmpty
 	private String titre;
-	@Column
+	
 	@NotEmpty
 	private String auteur;
+	
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private Type type;
 	
 	@OneToOne
 	@JsonIgnoreProperties("media")
-	private Emprunt emprunteur;
+	private Emprunt emprunt;
 		
 	public enum Type {
 		Livre, CD, DVD;

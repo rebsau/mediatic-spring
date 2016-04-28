@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserController {
 	
-	
+	/*
 	@Autowired
 	private UserService userService;
 	
@@ -68,7 +68,7 @@ public class UserController {
 	public void delete(@PathVariable Long id) {
 		userService.delete(id);
 	}
-	
+	*/
 }
 
 
