@@ -45,10 +45,13 @@ public class Media implements IoEntity {
 	}
 
 	public Media() {
+		System.out.println("default");
 	}
 
 	//@JsonIgnoreProperties({"hibernateLazyInitialiser","handler"})
 	public Media(String titre, String auteur, Type type) {
+		System.out.println("construt");
+		
 		this.titre = titre;
 		this.auteur = auteur;
 		this.type = type;

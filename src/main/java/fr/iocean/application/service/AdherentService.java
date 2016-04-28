@@ -14,15 +14,22 @@ import org.springframework.stereotype.Service;
 
 import fr.iocean.application.model.Adherent;
 import fr.iocean.application.repository.AdherentRepository;
+import fr.iocean.application.repository.EmpruntRepository;
 
 @Service
 public class AdherentService {
 
 	@Autowired
 	AdherentRepository adherentRepository;
+	
+	@Autowired
+	EmpruntRepository empruntRepository;
 
 	public Adherent findById(Long id) {
-		return adherentRepository.findOne(id);
+		Adherent adh = adherentRepository.findOne(id);
+		Integer nbMedia = empruntRepository.countEmpruntForAdherent(id);
+		adh.setNbMedia(nbMedia);
+		return adh;
 	}
 
 	public PageImpl<Adherent> searchAdherents(int page, boolean ascend, String triParam, Long id, String nom) {

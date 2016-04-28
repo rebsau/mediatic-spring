@@ -20,25 +20,26 @@ public class MediaRepositoryImpl extends AbstractJpaRepository<Media> implements
     }
 
     @Override
-    public PageImpl<Media> search(Pageable pageable, String title, String authorName, String type) {
+    public PageImpl<Media> search(Pageable pageable, String title, String authorName, Media.Type type) {
+    	
         Criteria query = createSearchCriteria(pageable);
         query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        constructQuerySearch(query, title, authorName, type);
+        constructQuerySearch(query, title, authorName, type);     
+        Long count = count(title, authorName, type);  
         
-        Long count = count(title, authorName, type);        
         return createSearchResult(pageable, query, count);
     }
 	
-    private Long count(String title, String authorName, String type) {
+    private Long count(String title, String authorName, Media.Type type) {
         Criteria query = getSession().createCriteria(entityClass).setProjection(Projections.countDistinct("id"));
         constructQuerySearch(query, title, authorName, type);
         return (Long) query.uniqueResult();
     }
 
-    private void constructQuerySearch(Criteria query, String title, String authorName, String type) {
-    	
-    	query.createAlias("emprunteur", "e", JoinType.LEFT_OUTER_JOIN);
-    	query.createAlias("e.adherent", "a");
+    private void constructQuerySearch(Criteria query, String title, String authorName, Media.Type type) {
+    	    	
+    	query.createAlias("emprunt", "e", JoinType.LEFT_OUTER_JOIN);
+    	query.createAlias("e.adherent", "a", JoinType.LEFT_OUTER_JOIN);
     	
 		if (!StringUtils.isEmpty(title)) {
 			query.add(Restrictions.like("titre", "%" + title + "%"));
@@ -47,8 +48,9 @@ public class MediaRepositoryImpl extends AbstractJpaRepository<Media> implements
 			query.add(Restrictions.like("auteur", "%" + authorName + "%"));
 		}
 		if (!StringUtils.isEmpty(type)) {
-			query.add(Restrictions.like("type", "%" + type + "%"));
+			query.add(Restrictions.eq("type", type));
 		}
+		
     }
 
 }

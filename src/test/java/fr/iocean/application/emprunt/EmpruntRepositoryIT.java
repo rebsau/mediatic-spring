@@ -24,7 +24,7 @@ public class EmpruntRepositoryIT extends IntegrationTest {
 	EmpruntRepository empruntRepository;
 	
 	@Test
-	public void testFindEmprunt() throws ParseException{
+	public void testFindEmpruntForMedia() throws ParseException{
 		
 		Pageable pageable = new PageRequest(0, 10);
 		Page<Emprunt> page = empruntRepository.findListEmpruntByMediaId(pageable, 1l);
@@ -33,6 +33,18 @@ public class EmpruntRepositoryIT extends IntegrationTest {
 		
 		//Assert.assertEquals(list.get(0).getDateEmprunt(), sdf.parse("2016-12-04"));
 		Assert.assertEquals(list.get(0).getAdherent().getPrenom(), "zino");
-		Assert.assertEquals(list.get(1).getAdherent().getPrenom(), "zino");
+		Assert.assertEquals(list.get(1).getAdherent().getPrenom(), "reb");
+	}
+	
+	@Test
+	public void testFindEmpruntForAdherent() throws ParseException{
+		
+		Pageable pageable = new PageRequest(0, 10);
+		Page<Emprunt> page = empruntRepository.findListEmpruntByAdherentId(pageable, 10l);
+		
+		List<Emprunt> list = page.getContent();
+		
+		Assert.assertEquals(list.get(0).getMedia().getTitre(),"tt");
+		Assert.assertEquals(list.get(1).getMedia().getAuteur(), "aa");
 	}
 }
