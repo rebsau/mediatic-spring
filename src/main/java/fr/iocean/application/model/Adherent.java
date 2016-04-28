@@ -1,6 +1,6 @@
 package fr.iocean.application.model;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -14,19 +14,23 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import fr.iocean.application.helper.DateHelper;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import fr.iocean.application.helper.DateHelper;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name="adherent")
+@Table(name = "adherent")
+@Getter
+@Setter
 public class Adherent implements IoEntity {
 	private static final long serialVersionUID = 3488747282845051698L;
-	
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@Column
 	@NotEmpty
 	private String nom;
@@ -49,156 +53,51 @@ public class Adherent implements IoEntity {
 	private Date date_paiement;
 	@Column
 	private int montant_cotisation;
-	@OneToMany(mappedBy="adherent")
+	@OneToMany(mappedBy = "adherent")
 	private List<Emprunt> emprunts;
 	
-	public Adherent () {
-		
+	@Column
+	private int nbrMedia;
+
+	public Adherent() {
+
 	}
-	
-	public Adherent (String prenom, String nom, Date date_naissance, String email) {
+	//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	public Adherent(String prenom, String nom, Date date_naissance, String email) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.date_naissance = date_naissance;
 		this.email = email;
 	}
-	
-	
-	//GETTERS
-	@Override
-	public Long getId() {
-		return id;
-	}
-	
-	public String getNom() {
-		return nom;
-	}
-	
-	public String getPrenom() {
-		return prenom;
-	}
-	
-	public Date getDateNaissance() {
-		return date_naissance;
-	}
-	
-	public String getAdresse() {
-		return adresse;
-	}
-	
-	public String getCodePostal() {
-		return code_postal;
-	}
-	
-	public String getVille() {
-		return ville;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
-	
-	public Date getDatePaiement() {
-		return date_paiement;
-	}
-	
-	public int getMontantCotisation() {
-		return montant_cotisation;
-	}
-	
-	public List<Emprunt> getEmprunts() {
-		if(this.emprunts== null){
-			this.emprunts = new ArrayList<Emprunt>();
-		}
-		return this.emprunts;
-	}
-	
-	//SETTERS
-	@Override
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-	
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-	
-	public void setDateNaissance(Date date_naissance) {
-		this.date_naissance = date_naissance;
-	}
-	
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
-	}
-	
-	public void setCodePostal(String code_postal) {
-		this.code_postal = code_postal;
-	}
-	
-	public void setVille(String ville) {
-		this.ville = ville;
-	}
-	
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public void setDatePaiement(Date date_paiement) {
-		this.date_paiement = date_paiement;
-	}
-	
-	public void setMontantCotisation(int montant_cotisation) {
-		this.montant_cotisation = montant_cotisation;
-	}
-	
-	public void setEmprunts(List<Emprunt> em) {
-		this.emprunts = em;
-	}
-	
-	public void addEmprunt(Emprunt emprunt){
-		if(!getEmprunts().contains(emprunt)){
+
+	public void addEmprunt(Emprunt emprunt) {
+		if (!getEmprunts().contains(emprunt)) {
 			this.emprunts.add(emprunt);
 		}
 	}
-	
-	
+
 	public String toString() {
 		return prenom + " " + nom;
 	}
-	
-	
-	
-	public boolean isAjourCotisation() {
-		Date dateFinCotisation = DateHelper.plusYears(date_paiement, 1);
-		
-		if (dateFinCotisation.compareTo(DateHelper.now()) <= 0)
-			return false;
-		else
-			return true;
-	}
-	
-	
-	public int getNbMediaPossede() {
-		int res = 0;
-		
-		for (Emprunt emp : getEmprunts()) {
-			if (emp.getDateRetour().compareTo(DateHelper.now()) > 0)
-				res++;
-		}
-		
-		return res;
-	}
 
-	
+//	public boolean isAjourCotisation() {
+//		Date dateFinCotisation = DateHelper.plusYears(date_paiement, 1);
+//
+//		if (dateFinCotisation.compareTo(DateHelper.now()) <= 0)
+//			return false;
+//		else
+//			return true;
+//	}
+
+//	public int getNbMediaPossede() {
+//		int res = 0;
+//
+//		for (Emprunt emp : getEmprunts()) {
+//			if (emp.getDateRetour().compareTo(DateHelper.now()) > 0)
+//				res++;
+//		}
+//
+//		return res;
+//	}
+
 }
-
-
-
-
-
-
-

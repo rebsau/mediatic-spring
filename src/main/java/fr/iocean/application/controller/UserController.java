@@ -31,43 +31,42 @@ public class UserController {
 	
 	
 	
-	@RequestMapping(method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.CREATED)
-	public void create(@RequestBody @Valid User user) {
-		userService.save(user);
-	}
-	
-	
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public User findById(@PathVariable Long id) {
-		User res = userService.findOne(id);
-		
-		if (res == null)
-			throw new NotFoundException();
-		
-		return res;
-	}
-	
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public List<User> findAll() {
-		return userService.findAll();
-	}
-	
-	
-	
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public void update(@PathVariable Long id, @RequestBody @Valid User user) {
-		user.setId(id);
-		userService.save(user);
-	}
-	
-	
-	
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable Long id) {
-		userService.delete(id);
-	}
+//	@RequestMapping(method = RequestMethod.POST)
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public void create(@RequestBody @Valid User user) {
+//		userService.save(user);
+//	}
+//	
+//	
+//	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+//	public User findById(@PathVariable Long id) {
+//		User res = userService.findOne(id);
+//		
+//		if (res == null)
+//			throw new NotFoundException();
+//		
+//		return res;
+//	}
+//	
+//	
+//	@RequestMapping(method = RequestMethod.GET)
+//	public List<User> findAll() {
+//		return userService.findAll();
+//	}
+//	
+//	
+//	
+//	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+//	public void update(@PathVariable Long id, @RequestBody @Valid User user) {
+//		user.setId(id);
+//		userService.save(user);
+//	}
+//	
+//	
+//	
+//	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+//	public void delete(@PathVariable Long id) {
+//		userService.delete(id);
 	
 }
 

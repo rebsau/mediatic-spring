@@ -20,27 +20,27 @@ public class UserService {
 	
 	
 	
-    public User save(User user) {
-        return userRepo.save(user);
-    }
-    
-    
-    public User findOne(Long id) {
-        return userRepo.findOne(id);
-    }
-    
-    
-    public List<User> findAll() {
-        return userRepo.findAll();
-    }
-    
-    
-    public void delete(Long id) {
-    	User user = findOne(id);
-    	
-    	if (user != null)
-    		userRepo.delete(user);
-    }
+//    public User save(User user) {
+//        return userRepo.save(user);
+//    }
+//    
+//    
+//    public User findOne(Long id) {
+//        return userRepo.findOne(id);
+//    }
+//    
+//    
+//    public List<User> findAll() {
+//        return userRepo.findAll();
+//    }
+//    
+//    
+//    public void delete(Long id) {
+//    	User user = findOne(id);
+//    	
+//    	if (user != null)
+//    		userRepo.delete(user);
+//    }
     
     
     public User findOneByLogin(String login) {
