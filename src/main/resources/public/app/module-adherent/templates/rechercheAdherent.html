@@ -1,0 +1,75 @@
+	
+	<form novalidate class="form-horizontal" ng-submit="AdherentCtrl.recherche()">
+		<div class="form-group">
+			<label class="col-sm-2 control-label hidden-xs">Identifiant:</label>
+			<div class="col-sm-3 divInput">
+					<input ng-model="AdherentCtrl.id" type="text" class="form-control" placeholder="Identifiant" />
+			</div>
+			
+			<label class="col-sm-1 control-label hidden-xs">Nom:</label>
+			<div class="col-sm-3 divInput">
+					<input ng-model="AdherentCtrl.NomEtPrenom" type="text" class="form-control" placeholder="Nom ou Pr&eacute;nom" />
+			</div>
+   			<div class="col-sm-1 divInput">
+ 					<button type="submit" class="btn btn-default btn-info">Rechercher</button>
+ 			</div>
+ 		</div>
+ 	</form>	
+		
+		
+	<table class="table table-striped table-bordered table-hover table-responsive">
+		<thead>
+			<tr>
+				<th ng-click="AdherentCtrl.initTriParam('id'); AdherentCtrl.triAdherent() ">ID</th>
+				<th ng-click="AdherentCtrl.initTriParam('nom'); AdherentCtrl.triAdherent() ">Nom et pr&eacute;nom</th>
+				<th>Date de naissance</th>
+				<th><span class="fa fa-money" /></th>
+				<th><span class="fa fa-files-o" /></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-show="AdherentCtrl.adherents==undefined">
+				<td colspan="4">
+					Chargement du catalogue en cours
+				</td>
+			</tr>
+			<tr ng-show="AdherentCtrl.hasErrorAdherents()">
+				<td colspan="4">
+					Erreur lors du chargement du catalogue
+				</td>
+			</tr>
+			<tr ng-repeat="adherent in AdherentCtrl.adherents |orderBy:orderByField:reverseSort "
+				ng-click="AdherentCtrl.showAdherent(adherent)">
+				<td ng-bind="adherent.id"></td>
+				<td><span ng-bind="adherent.nom"></span>  <span ng-bind="adherent.prenom"></span></td>
+				<td ng-bind="adherent.date_naissance | date: 'dd-MM-yyyy'"></td>
+				<td>
+					<span ng-if="adherent.cotisation_correcte == true" class="fa fa-check" />
+					<span ng-if="adherent.cotisation_correcte == false" class="fa fa-times"  />
+				</td>
+				<td ng-bind="adherent.nombre_media"></td>
+			</tr>
+		</tbody>
+	</table>
+
+
+		<uib-pagination boundary-links="true" 
+					total-items="AdherentCtrl.totalItems" 
+					ng-model="AdherentCtrl.currentPage"
+					max-size="AdherentCtrl.maxSize"	
+					force-ellipses="true"
+					class="pagination-sm" 
+					previous-text="&lsaquo;" 
+					next-text="&rsaquo;" 
+					first-text="&laquo;" 
+					last-text="&raquo;"
+					ng-click="AdherentCtrl.pagination(AdherentCtrl.currentPage-1)">
+		</uib-pagination>
+	
+
+		
+	<div class="col-xs-12">
+		<a class="btn btn-default btn-success col-md-2 col-sm-3 col-xs-12" href="#/adherent/creation">Nouvel adh&eacute;rent</a>
+	</div>
+
+

@@ -1,24 +1,15 @@
+
 package fr.iocean.application.repository;
 
-import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import fr.iocean.application.model.User;
 
 
-@Repository
-public class UserRepository extends AbstractJpaRepository<User> {
+public interface UserRepository extends JpaRepository<User, Long> {
 	
-	@Override
-	protected Class<User> getEntityClass() {
-		return User.class;
-	}
-	
-	@Transactional(readOnly = true)
-    public User findOneByLogin(String login) {
-		return (User)getSession().createCriteria(entityClass).add(Restrictions.eq("login", login)).uniqueResult();
-    }
-	
+	public User findByLogin(String login);
 	
 }
+
+
