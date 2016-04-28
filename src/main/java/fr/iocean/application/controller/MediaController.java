@@ -39,9 +39,11 @@ public class MediaController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public PageImpl<Media> searchMedias(@RequestParam int page,@RequestParam boolean ascend,@RequestParam String triParam,
-			@RequestParam String title,@RequestParam String author,@RequestParam String type){
+			@RequestParam String title,@RequestParam String author,@RequestParam Media.Type type){
+		
 		return mediaService.searchMedias(page, ascend, triParam, title, author, type);
 	}
+	
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public Media findMedia(@PathVariable Long id){

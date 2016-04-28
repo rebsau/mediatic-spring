@@ -23,8 +23,8 @@ public class MediaService {
 		mediaRepository.save(media);
 	}
 		
-	public PageImpl<Media> searchMedias(int page, boolean ascend, String triParam, String title, String author, String type){
-		
+	public PageImpl<Media> searchMedias(int page, boolean ascend, String triParam, String title, String author, Media.Type type){
+
 		Pageable pageable;
 		
 		if(ascend){

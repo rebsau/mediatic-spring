@@ -30,29 +30,29 @@ public class Adherent implements IoEntity {
 	@GeneratedValue
 	private Long id;
 
-	@Column
 	@NotEmpty
 	private String nom;
-	@Column
+
 	@NotEmpty
 	private String prenom;
-	@Column
+	
 	@NotNull
 	private Date date_naissance;
-	@Column
+	
 	private String adresse;
-	@Column
+	
 	private String code_postal;
-	@Column
+
 	private String ville;
-	@Column
+
 	@NotEmpty
 	private String email;
-	@Column
+
 	private Date date_paiement;
-	@Column
+
 	private Integer montant_cotisation;
-	
+
+	private Integer nbMedia;
 
 
 	public Adherent() {
