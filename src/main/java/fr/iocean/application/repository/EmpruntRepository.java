@@ -18,6 +18,6 @@ public interface EmpruntRepository extends JpaRepository<Emprunt, Long>{
 			countQuery = "select count(e) from Emprunt as e join e.adherent as a where a.id = :id")
 	public PageImpl<Emprunt> findListEmpruntByAdherentId(Pageable pageable, @Param("id") Long id);
 	
-	@Query("select count(*) from Emprunt as join e.adherent where a.id = :id")
+	@Query("select count(*) from Emprunt as e join e.adherent as a where a.id = :id")
 	public Integer countEmpruntForAdherent(@Param("id") Long id);
 }
