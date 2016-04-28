@@ -44,7 +44,7 @@ public class UserService {
     
     
     public User findOneByLogin(String login) {
-		return userRepo.findOneByLogin(login);
+		return userRepo.findByLogin(login);
     }
     
 }
