@@ -1,5 +1,6 @@
 package fr.iocean.application.controller;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import fr.iocean.application.model.Emprunt;
 import fr.iocean.application.service.EmpruntService;
 
+
+@RestController
+@RequestMapping("/api/emprunts")
+@Transactional
 public class EmpruntController {
 
 	@Autowired
@@ -31,9 +37,9 @@ public class EmpruntController {
 		empruntService.save(emprunt);
 	}
 	
-	@RequestMapping(value = "{mediaId}", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public PageImpl<Emprunt> findListEmpruntForMedia(@RequestParam int page,@RequestParam boolean ascend,@RequestParam String triParam,
-			@PathVariable Long mediaId){
+			@RequestParam Long mediaId){
 		return empruntService.searchListEmpruntByMedia(page, ascend, triParam, mediaId);
 	}
 	

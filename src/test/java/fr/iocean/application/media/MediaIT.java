@@ -110,8 +110,8 @@ public class MediaIT extends IntegrationTest{
 		this.mockMvc.perform(get("/api/medias/1")).andDo(MockMvcResultHandlers.print())
 			.andExpect(jsonPath("$.id").value(1))
 			.andExpect(jsonPath("$.titre").value("tt"))
-			.andExpect(jsonPath("$.emprunt.id").value(11))
-			.andExpect(jsonPath("$.emprunt.adherent.nom").value("kholladi"))
-			.andExpect(jsonPath("$.emprunt.adherent.prenom").value("zino"));		
+			.andExpect(jsonPath("$.emprunt.id").value(12))
+			.andExpect(jsonPath("$.emprunt.adherent.nom").value("sau"))
+			.andExpect(jsonPath("$.emprunt.adherent.prenom").value("reb"));		
 	}
 }
