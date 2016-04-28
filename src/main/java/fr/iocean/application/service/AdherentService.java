@@ -25,14 +25,17 @@ public class AdherentService {
 		return adherentRepository.findOne(id);
 	}
 
-	public PageImpl<Adherent> searchAdherents(int page, boolean ascend, String triParam, Long id, String nom) {
+	public PageImpl<Adherent> searchAdherents(Integer page, boolean ascend, String triParam, Long id, String nom) {
+		
 		Pageable pageable;
 		if (ascend) {
 			pageable = new PageRequest(page, 10, Sort.Direction.ASC, triParam);
 		} else {
 			pageable = new PageRequest(page, 10, Sort.Direction.DESC, triParam);
 		}
+		System.out.println("service");
 		return adherentRepository.search(pageable, id, nom);
+
 	}
 
 	public List<Adherent> searchAdherentsByName(String nom) {

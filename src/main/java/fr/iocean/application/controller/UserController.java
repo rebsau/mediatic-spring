@@ -29,8 +29,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	
-	
+
 //	@RequestMapping(method = RequestMethod.POST)
 //	@ResponseStatus(HttpStatus.CREATED)
 //	public void create(@RequestBody @Valid User user) {

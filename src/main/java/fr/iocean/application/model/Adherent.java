@@ -2,13 +2,12 @@ package fr.iocean.application.model;
 
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -52,12 +51,9 @@ public class Adherent implements IoEntity {
 	@Column
 	private Date date_paiement;
 	@Column
-	private int montant_cotisation;
-	@OneToMany(mappedBy = "adherent")
-	private List<Emprunt> emprunts;
+	private Integer montant_cotisation;
 	
-	@Column
-	private int nbrMedia;
+
 
 	public Adherent() {
 
@@ -69,35 +65,18 @@ public class Adherent implements IoEntity {
 		this.date_naissance = date_naissance;
 		this.email = email;
 	}
-
-	public void addEmprunt(Emprunt emprunt) {
-		if (!getEmprunts().contains(emprunt)) {
-			this.emprunts.add(emprunt);
-		}
-	}
-
+	
 	public String toString() {
 		return prenom + " " + nom;
 	}
-
-//	public boolean isAjourCotisation() {
-//		Date dateFinCotisation = DateHelper.plusYears(date_paiement, 1);
-//
-//		if (dateFinCotisation.compareTo(DateHelper.now()) <= 0)
-//			return false;
-//		else
-//			return true;
-//	}
-
-//	public int getNbMediaPossede() {
-//		int res = 0;
-//
-//		for (Emprunt emp : getEmprunts()) {
-//			if (emp.getDateRetour().compareTo(DateHelper.now()) > 0)
-//				res++;
-//		}
-//
-//		return res;
-//	}
+	
+	public boolean aJourCotisation() {
+		Date dateFinCotisation = DateHelper.plusYears(date_paiement, 1);
+		
+		if (dateFinCotisation.compareTo(DateHelper.now()) <= 0)
+			return false;
+		else
+			return true;
+	}
 
 }

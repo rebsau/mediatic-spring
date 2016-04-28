@@ -20,31 +20,37 @@ public class AdherentRepositoryImpl extends AbstractJpaRepository<Adherent> impl
 
 	@Override
 	public PageImpl<Adherent> search(Pageable pageable, Long id, String nom) {
+		System.out.println("search");
 		Criteria query = createSearchCriteria(pageable);
 		query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		System.out.println("11");
 		constructQuerySearch(query, id, nom);
 		Long count = count(id, nom);
 		return createSearchResult(pageable, query, count);
 	}
 
-	private Long count(long id, String nom) {
+	private Long count(Long id, String nom) {
 		Criteria query = getSession().createCriteria(entityClass).setProjection(Projections.countDistinct("id"));
 		constructQuerySearch(query, id, nom);
 		return (Long) query.uniqueResult();
 	}
 
-	private void constructQuerySearch(Criteria query, long id, String nom) {
+	private void constructQuerySearch(Criteria query, Long id, String nom) {
 		
 		Disjunction or = Restrictions.disjunction();
-		query.add(or);
+		
+		System.out.println("construct");
 		
 		if (!StringUtils.isEmpty(id)) {
 			query.add(Restrictions.like("id", "%" + id + "%"));
 		}
 		if (!StringUtils.isEmpty(nom)) {
-			or.add(Restrictions.like("nom", nom));
-			or.add(Restrictions.like("prenom", nom));
+			query.add(or);
+			or.add(Restrictions.like("nom","%"+ nom +"%"));
+			or.add(Restrictions.like("prenom","%"+ nom+"%"));
 		}
+		
+		System.out.println("constructEnd");
 	}
 
 }
