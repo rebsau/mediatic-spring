@@ -45,7 +45,21 @@ angular.module('ModuleAdherent')
 		
 		ctrl.submit = function() {
 			if ($scope.adherent.$valid) {
-				CreerAdherentService.submit(ctrl.adherent).then(function(response) {
+				
+				var adherentToSend = {
+					nom: ctrl.adherent.nom,
+					prenom: ctrl.adherent.prenom,
+					date_naissance: ctrl.adherent.date_naissance,
+					adresse: ctrl.adherent.adresse.ligne1 + ' ' + ctrl.adherent.adresse.ligne2,
+					code_postal: ctrl.adherent.adresse.codepostal,
+					ville: ctrl.adherent.adresse.ville,
+					email: ctrl.adherent.email,
+					date_paiement: ctrl.adherent.cotisation.debut,
+					montant_cotisation: ctrl.adherent.cotisation.montant
+				};
+				
+				
+				CreerAdherentService.submit(adherentToSend).then(function(response) {
 					if(response.submited) {
 						$location.path('/adherent');
 					}

@@ -47,7 +47,7 @@ angular.module('ModuleGlobal').factory('urlService', [function() {
 		},
 		
 		getCreationAdherentUrl: function() {
-			return server + '/resource/adherent.creation';
+			return server + '/api/adherent';
 		},
 	
 		getAjoutEmpruntUrl: function() {

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.iocean.application.model.User;
 
+//Not used
 
 @Repository
 public class UserRepositoryOLD extends AbstractJpaRepository<User> {
