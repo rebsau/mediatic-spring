@@ -1,6 +1,6 @@
 
 
-<section>
+<section ng-if="topCtrl.hasAuthority('USER_ADMIN')">
 
 	<form novalidate class="form-horizontal" name="adherent" ng-submit="newAdherentCtrl.submit()">
 		<div ng-show="newAdherentCtrl.error.badNom">
@@ -149,6 +149,8 @@
 
 </section>
 
-
+<div class="row" ng-if="!topCtrl.hasAuthority('USER_ADMIN')">
+	<label class="error">Vous n'avez pas les droits d'acces &agrave; cette page !</label>
+</div>
 
 

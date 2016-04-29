@@ -2,6 +2,8 @@ package fr.iocean.application.controller;
 
 
 
+import java.util.List;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
@@ -47,11 +49,16 @@ public class AdherentController {
 		adherentService.update(adherent);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping( method = RequestMethod.GET)
 	public PageImpl<Adherent> searchAdherents(@RequestParam int page,@RequestParam boolean ascend,@RequestParam String triParam,
 			@RequestParam(required = false) Long id,@RequestParam(required = false) String nom){
 		System.out.println("controller");
 		return adherentService.searchAdherents(page, ascend, triParam, id, nom);
+	}
+	
+	@RequestMapping(value ="/allByName",method = RequestMethod.GET)
+	public List<Adherent> findAllByName(@RequestParam String name){
+		return adherentService.searchAdherentsByName(name);
 	}
 	
 	

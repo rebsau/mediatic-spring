@@ -4,18 +4,13 @@ angular.module('ModuleGlobal').service('LoginService', ['$http', '$rootScope', '
 	var self = this;
 	
 	var url = urlService.getLoginUrl();
-	//var connected = false;
-	
 	self.identifier = '';
 	
 	
 	
 	self.isConnected = function() {
-		$rootScope.globals = $cookieStore.get('globals') || {};
-		
-		if ($rootScope.globals.currentUser) {
+		if ($rootScope.globals.currentUser)
 			return true;
-		}
 		
 		return false;
 	};
@@ -33,20 +28,19 @@ angular.module('ModuleGlobal').service('LoginService', ['$http', '$rootScope', '
         
 		
 		return $http.get(url, config).then(function(response) {
-			connected = true;
-			
 			
 			$rootScope.globals = {
 	            currentUser: {
 	                username: identifier,
-	                authdata: authdata
+	                authdata: authdata,
+	                authorities: response.data
 	            }
 	        };
 
 	        $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
 	        $cookieStore.put('globals', $rootScope.globals);
 	        
-			
+	        
 			if (remember)
 				self.identifier = identifier;
 			else
@@ -61,12 +55,13 @@ angular.module('ModuleGlobal').service('LoginService', ['$http', '$rootScope', '
 	
 	
 	self.disconnect = function() {
-		connected = false;
-		
 		$rootScope.globals = {};
         $cookieStore.remove('globals');
         $http.defaults.headers.common.Authorization = 'Basic ';
 	};
+	
+	
+	
 	
 	
 }]);

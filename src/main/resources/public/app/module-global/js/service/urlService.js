@@ -11,7 +11,7 @@ angular.module('ModuleGlobal').factory('urlService', [function() {
 		},
 	
 		getRechercheMediaUrl: function() {
-			return server + '/resource/media.recherche';
+			return server + '/api/medias';
 		},
 		
 		getRechercheMediaTailleUrl: function() {
@@ -19,15 +19,19 @@ angular.module('ModuleGlobal').factory('urlService', [function() {
 		},
 	
 		getAccessionMediaUrl: function() {
-			return server + '/resource/media.accession';
+			return server + '/api/medias';
 		},
 		
 		getModificationMediaUrl: function() {
-			return server + '/resource/media.modifcation';
+			return server + '/api/medias';
 		},
 		
 		getCreationMediaUrl: function() {
-			return server + '/resource/media.creation';
+			return server + '/api/medias';
+		},
+		
+		getEmpruntForMediaUrl: function() {
+			return server + '/api/emprunts';
 		},
 		
 		getRechercheAdherentUrl: function() {
@@ -51,7 +55,7 @@ angular.module('ModuleGlobal').factory('urlService', [function() {
 		},
 	
 		getAjoutEmpruntUrl: function() {
-			return server + '/resource/emprunt.ajout';
+			return server + '/api/emprunts';
 		}
 		
 		

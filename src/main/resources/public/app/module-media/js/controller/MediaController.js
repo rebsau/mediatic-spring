@@ -9,33 +9,43 @@ angular.module('ModuleMedia').controller('MediaController', [ '$http', '$sce', '
 	
 	myCtrl.totalItems = undefined;
 	myCtrl.currentPage = 1;
-	myCtrl.maxSize = 5;
+	myCtrl.maxSize = 10;
 	
-	myCtrl.triParam = 'titre';
+	myCtrl.tri = {
+			param : 'titre',
+			dir : true
+	}
 	
 	var url = urlService.getRechercheMediaUrl();
 
 	myCtrl.initMedia = function(response){
 		myCtrl.medias = [];
-		for(var index in response.data){
-			var itemFromServeur = response.data[index];
+				
+		for(var index in response.data.content){
+			var itemFromServeur = response.data.content[index];
+						
 			var itemForIHM = {
 				id:itemFromServeur.id,
 				titre:itemFromServeur.titre,
 				auteur:itemFromServeur.auteur,
 				type:itemFromServeur.type,
-				emprunteur:itemFromServeur.emprunteur,
 			};
-			if(itemFromServeur.retour==undefined){
-				itemForIHM.retour = "";
+			
+			if(itemFromServeur.emprunt!=null){
+				itemForIHM.emprunt = {
+						id : itemFromServeur.emprunt.id,
+						adh : itemFromServeur.emprunt.adherent,
+						dateRetour : new Date(itemFromServeur.emprunt.dateRetour),	
+				};
 			}else{
-				itemForIHM.retour = new Date(itemFromServeur.retour);
+				itemForIHM.emprunt = null;
 			}		
 			myCtrl.medias.push(itemForIHM);
 		}
+		myCtrl.totalItems = response.data.totalElements;
 	}
 	
-	$http.get(url, {params : {page:0, tri:myCtrl.triParam}}).then(function(response){
+	$http.get(url, {params : {page:0, ascend:true, triParam:myCtrl.tri.param,}}).then(function(response){
 		myCtrl.initMedia(response);
 	}, function(){
 		// En cas d'erreur
@@ -52,10 +62,10 @@ angular.module('ModuleMedia').controller('MediaController', [ '$http', '$sce', '
 	}
 	
 	myCtrl.disponibiliter = function(media){
-		if(media.retour == null){
+		if(media.emprunt == null){
 			return "Disponible"
 		}else{
-			return "Emprunté par "+ myCtrl.nomPrenom(media.emprunteur) +"jusqu'au "+media.retour;
+			return "Emprunté par "+ myCtrl.nomPrenom(media.emprunt.adh) +"jusqu'au "+media.emprunt.dateRetour;
 		}
 	}
 	
@@ -71,73 +81,47 @@ angular.module('ModuleMedia').controller('MediaController', [ '$http', '$sce', '
 	
 	myCtrl.recherche = function(){
 		var rech = {
-			titre : myCtrl.titre,
-			auteur : myCtrl.auteur,
+			page : myCtrl.currentPage-1,
+			triParam : myCtrl.tri.param,
+			ascend : myCtrl.tri.dir,	
+			title : myCtrl.titre,
+			author : myCtrl.auteur,
 			type : myCtrl.type,
-			page : 0,
-			tri : myCtrl.triParam
+			
 		}
-					
+		
 		$http.get(url, {params : rech}).then(function(response){
-			myCtrl.initMedia(response);
-			myCtrl.initPagination();
+			myCtrl.initMedia(response);		
 		})
 	}
-	
-	myCtrl.initPagination = function(){
-		var urlTaille = urlService.getRechercheMediaTailleUrl();
-		
-		var rech = {
-			titre : myCtrl.titre,
-			auteur : myCtrl.auteur,
-			type : myCtrl.type,
-		}
-		
-		$http.get(urlTaille, {params : rech}).then(function(response){
-			myCtrl.totalItems = response.data.items;
-		})
-		
-	}
-	
-	myCtrl.initPagination();
 	
 	
 	myCtrl.pagination = function(myPage){
+	
 		var rech = {
-			titre : myCtrl.titre,
-			auteur : myCtrl.auteur,
-			type : myCtrl.type,
 			page : myPage,
-			tri : myCtrl.triParam
-		}			
+			triParam : myCtrl.tri.param,
+			ascend : myCtrl.tri.dir,	
+			title : myCtrl.titre,
+			author : myCtrl.auteur,
+			type : myCtrl.type,
 				
+		}
+		
 		$http.get(url, {params : rech}).then(function(response){
 			myCtrl.initMedia(response);
 		})
 	}
 
 	myCtrl.initTriParam = function(typeParam){
-		if(myCtrl.triParam==typeParam){
-			myCtrl.triParam=undefined;
+		if(myCtrl.tri.param==typeParam){
+			myCtrl.tri.dir = !myCtrl.tri.dir;
 		}else{
-			myCtrl.triParam=typeParam;
+			myCtrl.tri.param=typeParam;
+			myCtrl.tri.dir = true;
 		}
 	}
 	
-	myCtrl.triMedia = function(){
-		var rech = {
-			titre : myCtrl.titre,
-			auteur : myCtrl.auteur,
-			type : myCtrl.type,
-			page :myCtrl.currentPage-1,
-			tri : myCtrl.triParam
-		}
-		
-		$http.get(url, {params : rech}).then(function(response){
-			myCtrl.initMedia(response);
-			myCtrl.initPagination();
-		})
-	}
 
 	myCtrl.showMedia = function(media){
 		$location.path("/visuMedia/"+media.id);

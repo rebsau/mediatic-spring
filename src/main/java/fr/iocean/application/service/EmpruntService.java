@@ -20,8 +20,14 @@ public class EmpruntService {
 	@Autowired
 	EmpruntRepository empruntRepository;
 	
-	public void save(Emprunt emprunt){
-		empruntRepository.save(emprunt);
+	public Emprunt save(Emprunt emprunt){
+		if (emprunt.getId() == null) {
+			return empruntRepository.create(emprunt);
+		}else{
+			empruntRepository.save(emprunt);
+			return null;
+		}
+		
 	}
 	
 	

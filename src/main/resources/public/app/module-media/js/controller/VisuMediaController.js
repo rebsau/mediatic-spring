@@ -8,44 +8,78 @@ angular.module('ModuleMedia').controller('VisuMediaController', [ '$http', '$rou
 	myCtrl.media = undefined;
 	myCtrl.emprunteurs = undefined;
 	myCtrl.showFormAjout = false;
-	myCtrl.mediaEmprunter = false
 	
-	var url = urlService.getAccessionMediaUrl();
+	myCtrl.totalItems = undefined;
+	myCtrl.currentPage = 1;
+	myCtrl.maxSize = 10;
 	
-	var initEmprunteurs = function(response){
+	myCtrl.tri = {
+			param : 'id',
+			dir : true
+	}
+	
+	var urlMedia = urlService.getAccessionMediaUrl();
+	var urlMediaEmprunt = urlService.getEmpruntForMediaUrl();
+	
+	var initMedia = function(response){
 		
-		var itemFromServeur = response.data
+		var itemFromServeur = response.data;
 		var itemForIHM = {
-			id:itemFromServeur.id,
-			titre:itemFromServeur.titre,
-			auteur:itemFromServeur.auteur,
-			type:itemFromServeur.type,
-			emprunteur:itemFromServeur.emprunteur
-		};
+				id:itemFromServeur.id,
+				titre:itemFromServeur.titre,
+				auteur:itemFromServeur.auteur,
+				type:itemFromServeur.type,
+				emprunt:itemFromServeur.emprunt
+			};
+		
 		myCtrl.media = itemForIHM;
-		myCtrl.showFormAjout = myCtrl.media.emprunteur!=null;
+		myCtrl.showFormAjout = myCtrl.media.emprunt!=null;
 		myCtrl.calculDateReturn();
 		
-		
-		myCtrl.emprunteurs = [];
-		for(var index in response.data.emprunteurs){
+	}
+	
+	$http.get(urlMedia +'/'+ $routeParams.mediaId).then(function(response){
+		initMedia(response);
+	});
+	
+	var initEmprunteurs = function(response){
 				
-			var emp = response.data.emprunteurs[index];
+		myCtrl.emprunteurs = [];
+		for(var index in response.data.content){
+				
+			var emp = response.data.content[index];
 				
 			myCtrl.emprunteurs.push({
 				adherent : emp.adherent,
-				depart : new Date(emp.depart),
-				retour : new Date(emp.retour),
+				depart : new Date(emp.dateEmprunt),
+				retour : new Date(emp.dateRetour),
 			});;
-		}		
+		}
+		
+		myCtrl.totalItems = response.data.totalElements;
 	}
 	
-	$http.get(url, {params : {id : $routeParams.mediaId}}).then(function(response){
+	$http.get(urlMediaEmprunt, {params : {page:0, ascend:true, triParam:myCtrl.tri.param, mediaId:$routeParams.mediaId}}).then(function(response){
 		initEmprunteurs(response);
 	}, function(){
 		// En cas d'erreur
 		myCtrl.emprunteurs = -1;
 	});
+	
+	myCtrl.pagination = function(myPage){
+		
+		var rech = {
+			page : myPage,
+			triParam : myCtrl.tri.param,
+			ascend : myCtrl.tri.dir,	
+			mediaId : $routeParams.mediaId
+				
+		}
+		
+		$http.get(urlMediaEmprunt, {params : rech}).then(function(response){
+			myCtrl.initEmprunteurs(response);
+		})
+	}
 	
 	myCtrl.nomPrenom = function(adh){
 		if(adh!=null){
@@ -68,35 +102,20 @@ angular.module('ModuleMedia').controller('VisuMediaController', [ '$http', '$rou
 		}
 	}
 	
-	
-	myCtrl.error = {};
-	myCtrl.error.badTitre = false;
-	myCtrl.error.badAuteur = false;
-		
 	myCtrl.modificationMedia = function() {
 		if ($scope.media.$valid) {
-			
-			if(!myCtrl.mediaEmprunter){
-				myCtrl.media.emprunteur=null;
+				
+			if(!myCtrl.showFormAjout){
+				myCtrl.media.emprunt=null;
 			}
 			
-			var url = urlService.getModificationMediaUrl();
+			var urlModif = urlService.getModificationMediaUrl();
 		
-			$http.post(url, myCtrl.media).then(function(response) {			
+			$http.put(urlModif, myCtrl.media).then(function(response) {			
 				console.log("success");		
 			},function(response) {
 				console.log("perdu");		
 			});
-		}
-		else {
-			if (!$scope.media.titre.$valid) {
-				myCtrl.error.badTitre = true;
-				return;
-			}	
-			if (!$scope.media.auteur.$valid) {
-				myCtrl.error.badAuteur = true;
-				return;
-			}
 		}
 	};
 
@@ -104,7 +123,7 @@ angular.module('ModuleMedia').controller('VisuMediaController', [ '$http', '$rou
 	
 	myCtrl.rechercheAdherents = function(){
 		var recherche = {
-			nom : myCtrl.nomAdh
+			name : myCtrl.nomAdh
 		}	
 		
 		if(myCtrl.nomAdh=="" || myCtrl.nomAdh==undefined){
@@ -113,41 +132,70 @@ angular.module('ModuleMedia').controller('VisuMediaController', [ '$http', '$rou
 			myCtrl.showSelect = true;
 		}
 		
-		var url = urlService.getRechercheAdherentUrl();
+		var urlAdh = urlService.getRechercheAdherentUrl();
 		
-		$http.get(url, {params : recherche}).then(function(response){
+		$http.get(urlAdh + '/allByName', {params : recherche}).then(function(response){
 			myCtrl.adherents = [];
 			for(var index in response.data){
 				var itemFromServeur = response.data[index];
 				var itemForIHM = {
-					id:itemFromServeur.id,
-					nom:itemFromServeur.nom,
-					prenom:itemFromServeur.prenom,
+					id : itemFromServeur.id,
+					nom : itemFromServeur.nom,
+					prenom : itemFromServeur.prenom,
+					date_naissance : new Date(itemFromServeur.date_naissance),
+					email : itemFromServeur.email,
+					adresse : itemFromServeur.adresse ,
+					code_postal: itemFromServeur.code_postal,
+					ville: itemFromServeur.ville,
+					email: itemFromServeur.email,
+					date_paiement : itemFromServeur.date_paiement,
+					montant_cotisation : itemFromServeur.montant_cotisation,
+					nbMedia : itemFromServeur.nbMedia
 				};
 				myCtrl.adherents.push(itemForIHM);
-		
 			}
+			
 		})
 	}
+	
 	
 	myCtrl.ajoutEmprunteur = function() {
 		if ($scope.emprunteur.$valid) {
 			
 			var emprunt = {
-				idMedia : myCtrl.media.id,
-				idAdh : myCtrl.idAdh,
-				dateEmprunt : myCtrl.dateToday
+				media : myCtrl.media,
+				adherent : myCtrl.Adh,
+				dateEmprunt : myCtrl.dateToday,
+				dateRetour : myCtrl.dateReturn
 			}
 			
-			var url = urlService.getAjoutEmpruntUrl();
+			var newEmprunt = null;
+			
+			var urlEmprunt = urlService.getAjoutEmpruntUrl();
 		
-			$http.post(url, {params : emprunt}).then(function(response) {			
-				console.log("success");		
+			$http.post(urlEmprunt, emprunt).then(function(response) {			
+				newEmprunt  = response.data;
+				
+				myCtrl.media.emprunt = newEmprunt;
+				myCtrl.showFormAjout = true;
+			
+				
+				var urlModif = urlService.getModificationMediaUrl();
+				
+				$http.put(urlModif, myCtrl.media).then(function(response) {			
+					console.log("success");		
+				},function(response) {
+					console.log("perdu");		
+				});
+				
 			},function(response) {
 				console.log("perdu");		
 			});
-		}
-		
+			
+			
+			
+			
+		}	
 	};
 	
 }]);
