@@ -69,7 +69,6 @@ angular.module('ModuleAdherent').controller('AdherentController', ['$http','$loc
 		   }, 
 		   function(response){
 			 // failure call back
-			 alert('Mon serveur est HS !!!');
 		   }
 		);
 	}
