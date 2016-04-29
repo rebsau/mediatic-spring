@@ -1,7 +1,7 @@
 
 
 angular.module('ModuleGlobal')
-	.controller('TopController', ['LoginService', '$location', function(LoginService, $location) {
+	.controller('TopController', ['LoginService', 'AuthorityService', '$location', '$rootScope', function(LoginService, AuthorityService, $location, $rootScope) {
 		var ctrl = this;
 		
 		
@@ -42,6 +42,12 @@ angular.module('ModuleGlobal')
 		ctrl.disconnect = function() {
 			LoginService.disconnect();
 		};
+		
+		
+		
+		ctrl.hasAuthority = function(authority) {
+			return AuthorityService.hasAuthority(authority);
+		}
 		
 		
 	}]);

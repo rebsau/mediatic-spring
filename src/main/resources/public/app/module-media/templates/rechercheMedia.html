@@ -68,7 +68,7 @@
 	</uib-pagination>
 </div>
 
-<div class="col-xs-12">
+<div class="col-xs-12" ng-if="topCtrl.hasAuthority('USER_ADMIN')">
 	<a class="btn btn-default btn-success col-md-2 col-sm-3 col-xs-12" href="#/media/creation">Nouveau m&eacute;dia</a>
 </div>	
 
