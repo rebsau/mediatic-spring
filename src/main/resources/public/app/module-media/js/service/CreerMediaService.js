@@ -6,8 +6,6 @@ angular.module('ModuleMedia').service('CreerMediaService', ['$http', 'urlService
 	var url = urlService.getCreationMediaUrl();
 	
 	
-	
-	
 	self.submit = function(titre, auteur, type) {
 		var media = {
 			titre : titre,

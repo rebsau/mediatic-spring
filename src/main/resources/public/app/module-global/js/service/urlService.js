@@ -19,19 +19,23 @@ angular.module('ModuleGlobal').factory('urlService', [function() {
 		},
 	
 		getAccessionMediaUrl: function() {
-			return server + '/resource/media.accession';
+			return server + '/api/medias';
 		},
 		
 		getModificationMediaUrl: function() {
-			return server + '/resource/media.modifcation';
+			return server + '/api/medias';
 		},
 		
 		getCreationMediaUrl: function() {
-			return server + '/resource/media.creation';
+			return server + '/api/medias';
+		},
+		
+		getEmpruntForMediaUrl: function() {
+			return server + '/api/emprunts';
 		},
 		
 		getRechercheAdherentUrl: function() {
-			return server + '/resource/adherent.recherche';
+			return server + '/api/adherent';
 		},
 		
 		getRechercheAdherentTailleUrl: function() {
@@ -51,7 +55,7 @@ angular.module('ModuleGlobal').factory('urlService', [function() {
 		},
 	
 		getAjoutEmpruntUrl: function() {
-			return server + '/resource/emprunt.ajout';
+			return server + '/api/emprunts';
 		}
 		
 		

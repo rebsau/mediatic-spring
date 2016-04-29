@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import fr.iocean.application.model.Emprunt;
 
-public interface EmpruntRepository extends JpaRepository<Emprunt, Long>{
+public interface EmpruntRepository extends JpaRepository<Emprunt, Long>, EmpruntRepositoryCustom{
 
 	@Query(value = "select e from Emprunt as e join e.media as m join fetch e.adherent where m.id = :id", 
 			countQuery = "select count(e) from Emprunt as e join e.media as m where m.id = :id")

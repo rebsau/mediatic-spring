@@ -1,5 +1,6 @@
 -- test init data
 
+insert into user_ (login,password) VALUES ('aze','$2a$10$S9I6Kovu/wdC8sI9DW0XsenI6wawy3/PNH1Xt8WHE.f3eYmNS2WEm');
 
 insert into adherent (id, prenom, nom, date_naissance, email) values (10, 'zino', 'kholladi', '2005-11-11', 'add@gmail.com');
 insert into adherent (id, prenom, nom, date_naissance, email) values (20, 'reb', 'sau', '2005-11-11', 'add@gmail.com');

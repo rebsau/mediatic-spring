@@ -60,7 +60,7 @@ public class SampleIT extends IntegrationTest {
 
 	@Test
 	public void testFindById() throws Exception {
-		this.mockMvc.perform(get("/api/adherent/10")).andDo(MockMvcResultHandlers.print())
+		this.mockMvc.perform(get("/api/adherent/40")).andDo(MockMvcResultHandlers.print())
 				.andExpect(jsonPath("$.id", Is.is(10))).andExpect(status().isOk())
 				.andExpect(jsonPath("$.nom", Is.is("kholladi"))).andExpect(status().isOk())
 				.andExpect(jsonPath("$.prenom", Is.is("zino"))).andExpect(status().isOk());

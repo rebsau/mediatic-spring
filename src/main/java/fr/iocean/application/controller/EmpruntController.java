@@ -28,8 +28,8 @@ public class EmpruntController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void create(@RequestBody @Valid Emprunt emprunt){
-		empruntService.save(emprunt);
+	public Emprunt create(@RequestBody @Valid Emprunt emprunt){
+		return empruntService.save(emprunt);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)

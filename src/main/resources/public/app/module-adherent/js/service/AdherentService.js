@@ -6,55 +6,38 @@ angular.module('ModuleAdherent').service('AdherentService', ['$http', 'urlServic
 	var getPromise = function(recherche){
 		return $http.get(url, {params:recherche}).then(function(response) {
 			var adherents = [];
-			for(var index in response.data){
-				var itemFromServeur = response.data[index];
+			for (var index in response.data.content){
+				var itemFromServeur = response.data.content[index];
 				var itemForIHM = {
-					id : itemFromServeur.id,
-					nom : itemFromServeur.nom,
-					prenom : itemFromServeur.prenom,
-					date_naissance : new Date(itemFromServeur.date_naissance),
-					cotisation_correcte : itemFromServeur.cotisation_correcte,
-					email : itemFromServeur.email,
-					adresse : {},
-					cotisation : {},
-					age : itemFromServeur.age,
-					emprunt : [],
-					nombre_media : itemFromServeur.nombre_media	
+							id : itemFromServeur.id,
+							nom : itemFromServeur.nom,
+							prenom : itemFromServeur.prenom,
+							date_naissance : new Date(itemFromServeur.date_naissance),
+							adresse : itemFromServeur.adresse,
+							code_postal : itemFromServeur.code_postal,
+							ville : itemFromServeur.ville,
+							email : itemFromServeur.email,
+							date_paiement : new Date(itemFromServeur.date_paiement),
+							montant_cotisation : itemFromServeur.montant_cotisation,
+							nbMedia : itemFromServeur.nbMedia
 				};
 				
-				for (index in itemFromServeur.emprunt){
-					itemForIHM.emprunt.push(
-							{media:
-								{
-									id: itemFromServeur.emprunt[index].media.id,
-									titre: itemFromServeur.emprunt[index].media.titre
-								},
-									depart: itemFromServeur.emprunt[index].depart,
-									retour: itemFromServeur.emprunt[index].retour
-							}
-					)
-				} 
-				
-				if(itemFromServeur.adresse != undefined){
-					itemForIHM.adresse = {
-						ligne1: itemFromServeur.adresse.ligne1,
-						ligne2: itemFromServeur.adresse.ligne2,
-						codepostal: itemFromServeur.adresse.codepostal,
-						ville: itemFromServeur.adresse.ville	
-					};
+				var datePaiement = new Date(itemFromServeur.date_paiement);
+				var year = datePaiement.getFullYear()+1;
+				var dateFinCotisation = datePaiement.setFullYear(year);
+				if(Date.now() - dateFinCotisation <= 0){
+					itemForIHM.cotisation_correcte = true;
+				}else{
+					itemForIHM.cotisation_correcte = false;
 				}
 				
-				if(itemFromServeur.cotisation != undefined){
-					itemForIHM.cotisation = {
-							debut: itemFromServeur.cotisation.debut,
-							fin: itemFromServeur.cotisation.fin,
-							montant: itemFromServeur.cotisation.montant
-					};
-				}
-					
-				adherents.push(itemForIHM);						
-			}	
-			return adherents;
+				adherents.push(itemForIHM);
+			} 
+			var item = {
+					adhs : adherents,
+					totalElements : response.data.totalElements
+			}
+			return item;
 		});
 	};
 	
