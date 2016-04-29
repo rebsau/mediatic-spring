@@ -12,10 +12,10 @@ angular.module('ModuleAdherent').controller('AdherentController', ['$http','$loc
 	
 	myCtrl.triParam = 'nom';
 	
-	
-	AdherentService.getList({page:0, tri:myCtrl.triParam}).then(function(response) {
+	AdherentService.getList({page:0, ascend:true, triParam:myCtrl.triParam}).then(function(response) {
 		// En cas de succes
-		myCtrl.adherents = response;
+		myCtrl.adherents = response.adhs;
+		myCtrl.totalItems = response.totalElements
 	}, function(){
 		// En cas d'erreur
 		myCtrl.adherents = -1;
@@ -33,9 +33,9 @@ angular.module('ModuleAdherent').controller('AdherentController', ['$http','$loc
 	myCtrl.recherche = function(){
 		var recherche = {
 			id : myCtrl.id,
-			texte : myCtrl.NomEtPrenom,
+			nom : myCtrl.NomEtPrenom,
 			page : 0,
-			tri : myCtrl.triParam
+			triParam : myCtrl.triParam
 		}
 		
 
@@ -58,14 +58,14 @@ angular.module('ModuleAdherent').controller('AdherentController', ['$http','$loc
 		
 		var rech = {
 			id : myCtrl.id,
-			texte : myCtrl.NomEtPrenom
+			nom : myCtrl.NomEtPrenom
 		}
 
 		$http.get(urlTaille, {params:rech}).then(
 			function(response){
 			 // success callback
-			 myCtrl.totalItems = response.data.items;
-			 myCtrl.nbrPages = response.data.pages;
+			 myCtrl.totalItems = response.data.totalElements;
+			 myCtrl.nbrPages = response.data.totalPages;
 		   }, 
 		   function(response){
 			 // failure call back
@@ -74,15 +74,15 @@ angular.module('ModuleAdherent').controller('AdherentController', ['$http','$loc
 		);
 	}
 	
-	myCtrl.initPagination();
+	//myCtrl.initPagination();
 	
 	myCtrl.pagination = function(myPage){
 		// creation de rech qui prend comme parametre les donnes de l'url id, text, page
 		var rech = {
 			id : myCtrl.id,
-			texte : myCtrl.NomEtPrenom,
+			nom : myCtrl.NomEtPrenom,
 			page : myPage,
-			tri : myCtrl.triParam
+			triParam : myCtrl.triParam
 		}
 		AdherentService.getList(rech).then(function(response){
 			// En cas de succes
@@ -111,9 +111,9 @@ angular.module('ModuleAdherent').controller('AdherentController', ['$http','$loc
 		
 		var rech = {
 			id : myCtrl.id,
-			texte : myCtrl.NomEtPrenom,
+			nom : myCtrl.NomEtPrenom,
 			page :myCtrl.currentPage-1,
-			tri : myCtrl.triParam
+			triParam : myCtrl.triParam
 		}
 		
 		AdherentService.getList(rech).then(function(response){

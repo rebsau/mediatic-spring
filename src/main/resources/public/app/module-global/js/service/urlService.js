@@ -31,7 +31,7 @@ angular.module('ModuleGlobal').factory('urlService', [function() {
 		},
 		
 		getRechercheAdherentUrl: function() {
-			return server + '/resource/adherent.recherche';
+			return server + '/api/adherent';
 		},
 		
 		getRechercheAdherentTailleUrl: function() {

@@ -49,7 +49,7 @@ public class AdherentController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public PageImpl<Adherent> searchAdherents(@RequestParam int page,@RequestParam boolean ascend,@RequestParam String triParam,
-			@RequestParam Long id,@RequestParam String nom){
+			@RequestParam(required = false) Long id,@RequestParam(required = false) String nom){
 		System.out.println("controller");
 		return adherentService.searchAdherents(page, ascend, triParam, id, nom);
 	}
