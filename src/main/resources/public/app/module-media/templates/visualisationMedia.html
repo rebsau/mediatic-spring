@@ -4,11 +4,11 @@
 		<div class="form-group">
 			<label for="titre" class="col-sm-2 control-label hidden-xs">Titre :</label>
 			<div class="col-sm-4 divInput">
-				<input ng-model="visuMedCtrl.media.titre" type="text" class="form-control" name="titre" placeholder="Titre" />
+				<input ng-model="visuMedCtrl.media.titre" type="text" class="form-control" name="titre" placeholder="Titre" required/>
 			</div>		
 			<label class="col-sm-1 control-label hidden-xs">Type :</label>
 			<div class="col-sm-4">
-				<select ng-model="visuMedCtrl.media.type" class="form-control" style="font-family:'FontAwesome', Arial;" name="type" ng-change="visuMedCtrl.calculDateReturn()">
+				<select ng-model="visuMedCtrl.media.type" class="form-control" style="font-family:'FontAwesome', Arial;" name="type" ng-change="visuMedCtrl.calculDateReturn()" required>
 					<option value="Livre">&#xf02d; Livre</option>
 					<option value="CD">&#xf001; CD</option>
 					<option value="DVD">&#xf008; DVD</option>
@@ -18,7 +18,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label hidden-xs">Auteur :</label>
 				<div class="col-sm-4">
-					<input ng-model="visuMedCtrl.media.auteur"type="text" class="form-control" name="auteur" placeholder="Auteur" />
+					<input ng-model="visuMedCtrl.media.auteur"type="text" class="form-control" name="auteur" placeholder="Auteur" required/>
 				</div>
 				<div class="checkbox col-sm-offset-8">
 					<label>
@@ -33,6 +33,8 @@
 			</div>
 		</div>
 	</form>
+	
+	
 	<div>
 	<table class="table table-striped table-bordered table-hover " >
 		<thead>
@@ -50,18 +52,24 @@
 			</tr>
 		</tbody>		
 	</table>
+	<uib-pagination boundary-links="true" 
+				total-items="medCtrl.totalItems" 
+				ng-model="medCtrl.currentPage"
+				max-size="medCtrl.maxSize"	
+				force-ellipses="true"
+				class="pagination-sm" 
+				previous-text="&lsaquo;" 
+				next-text="&rsaquo;" 
+				first-text="&laquo;" 
+				last-text="&raquo;"
+				ng-click="medCtrl.pagination(medCtrl.currentPage-1)">
+	</uib-pagination>
 	</div>
 	
+	
+	
 	<div class="col-xs-12" ng-show="!visuMedCtrl.showFormAjout">
-		<form noactivate class="form-horizontal" name="emprunteur" >
-			<div ng-show="visuMedCtrl.error.badNom">
-				<label class="error col-sm-10 col-sm-offset-2">Le Nom est invalide !</label>
-			</div>
-			<div ng-show="visuMedCtrl.error.badDate">
-				<label class="error col-sm-10 col-sm-offset-2">La Date est invalide !</label>
-			</div>
-		
-		
+		<form noactivate class="form-horizontal" name="emprunteur" ng-submit="visuMedCtrl.ajoutEmprunteur()" >
 			<div class="form-group labelAjout">
 				<label class="col-sm-4 hidden-xs">Nom adherent:</label>
 				<label class="col-sm-4 hidden-xs">Date emprunt :</label>
@@ -80,7 +88,7 @@
 			</div>
 			<div class="form-group">
 				<div  class="col-xs-12 col-sm-4 divInput" ng-show="visuMedCtrl.showSelect">
-					<select class="form-control" style="font-family:'FontAwesome', Arial;" ng-model="visuMedCtrl.idAdh" ng-options="adh.id as adh.id+'/ '+adh.nom+' '+adh.prenom for adh in visuMedCtrl.adherents"/>
+					<select class="form-control" style="font-family:'FontAwesome', Arial;" ng-model="visuMedCtrl.Adh" ng-options="adh as adh.id+'/ '+adh.nom+' '+adh.prenom for adh in visuMedCtrl.adherents"/>
 				</div>
 				<button class="btn btn-info col-sm-offset-9 col-md-offset-10 col-md-2 col-sm-3 col-xs-12 ">Ajout</button>
 			</div>

@@ -3,6 +3,7 @@ package fr.iocean.application.repository;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -31,7 +32,15 @@ public abstract class AbstractJpaRepository<T extends IoEntity> {
     protected Session getSession() {
         return em.unwrap(Session.class);
     }
-
+    @Transactional
+    
+    public T create(T entity) {
+        
+    	Long id = (Long) getSession().save(entity);	
+    	entity.setId(id);
+        return entity;
+    }
+    
     public Criteria createSearchCriteria(Pageable pageable) {
         return getSession().createCriteria(entityClass)
                 .setFirstResult(pageable.getOffset())
