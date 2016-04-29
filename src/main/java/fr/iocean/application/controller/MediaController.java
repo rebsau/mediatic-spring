@@ -39,7 +39,7 @@ public class MediaController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public PageImpl<Media> searchMedias(@RequestParam int page,@RequestParam boolean ascend,@RequestParam String triParam,
-			@RequestParam String title,@RequestParam String author,@RequestParam Media.Type type){
+			@RequestParam(required = false) String title,@RequestParam(required = false) String author,@RequestParam(required = false) Media.Type type){
 		
 		return mediaService.searchMedias(page, ascend, triParam, title, author, type);
 	}

@@ -30,9 +30,9 @@
 	<table class="table table-striped table-bordered table-hover table-responsive" id="rowlink">
 		<thead>
 			<tr class="tabhead">
-				<th ng-click="medCtrl.initTriParam('titre'); medCtrl.triMedia() ">Titre</th>
-				<th></th> 
-				<th ng-click="medCtrl.initTriParam('auteur'); medCtrl.triMedia()">Auteur</th>
+				<th ng-click="medCtrl.initTriParam('titre'); medCtrl.recherche() ">Titre</th>
+				<th ng-click="medCtrl.initTriParam('type'); medCtrl.recherche()">Type</th> 
+				<th ng-click="medCtrl.initTriParam('auteur'); medCtrl.recherche()">Auteur</th>
 				<th class="hidden-xs">Emprunt&eacute; par</th>
 				<th class="hidden-xs">Date de retour pr&eacute;vu</th>
 				<th class="visible-xs centreText" ng-click="showDetails = ! showDetails"><span class="fa fa-plus-square" /></th>
@@ -44,8 +44,8 @@
 				<td ng-bind="media.titre" ></td>
 				<td ng-bind-html="medCtrl.icons(media.type)" class="centreText"></td> 
 				<td ng-bind="media.auteur" ></td>
-				<td ng-bind="medCtrl.nomPrenom(media.emprunteur)" class="hidden-xs"></td>
-				<td ng-bind="media.retour | date: 'yyyy-MM-dd'" class="hidden-xs"></td>
+				<td ng-bind="medCtrl.nomPrenom(media.emprunt.adh)" class="hidden-xs"></td>
+				<td ng-bind="media.emprunt.dateRetour | date: 'yyyy-MM-dd'" class="hidden-xs"></td>
 				<td class="visible-xs centreText">
 					<span  ng-show="!showDetails">...</span>
 					<span ng-bind="medCtrl.disponibiliter(media)"  ng-show="showDetails">Disponible</span>

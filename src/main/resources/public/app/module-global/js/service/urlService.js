@@ -11,7 +11,7 @@ angular.module('ModuleGlobal').factory('urlService', [function() {
 		},
 	
 		getRechercheMediaUrl: function() {
-			return server + '/resource/media.recherche';
+			return server + '/api/medias';
 		},
 		
 		getRechercheMediaTailleUrl: function() {
